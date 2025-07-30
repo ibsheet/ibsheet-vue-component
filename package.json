@@ -1,0 +1,34 @@
+{
+  "name": "ibsheet-vue-component",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/ibsheet-vue/ibsheet-vue.umd.js",
+  "module": "./dist/ibsheet-vue/ibsheet-vue.es.js",
+  "types": "./dist/ibsheet-vue/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/ibsheet-vue/ibsheet-vue.es.js",
+      "require": "./dist/ibsheet-vue/ibsheet-vue.umd.js"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && yarn copy-package && yarn build:types",
+    "build:types": "vue-tsc src/components/index.ts --declaration --emitDeclarationOnly --outDir dist/ibsheet-vue/types",
+    "copy-package": "node scripts/copy-package.cjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@types/node": "^24.1.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vue/runtime-core": "^3.5.18",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4",
+    "vue-tsc": "^2.2.12"
+  }
+}
