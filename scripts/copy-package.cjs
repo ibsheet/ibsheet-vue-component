@@ -8,6 +8,20 @@ const distPackage = {
   name: basePackage.name.replace('-component', ''),
   version: basePackage.version,
   license: basePackage.license,
+  keywords: [
+    "vue",
+    "ibsheet",
+    "grid",
+    "component"
+  ],
+  repository: {
+    "type": "git",
+    "url": "https://github.com/ibsheet/ibsheet-vue-component.git"
+  },
+  bugs: {
+    "url": "https://github.com/ibsheet/ibsheet-vue-component/issues"
+  },
+  homepage: "https://www.ibsheet.com/",
   main: 'ibsheet-vue.umd.js',
   module: 'ibsheet-vue.es.js',
   types: "./types/index.d.ts",
