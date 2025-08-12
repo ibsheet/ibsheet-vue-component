@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { shallowRef } from 'vue';
 import IBSheetVue from './components/IBSheetVue.vue';
-import { IB_Preset } from './components/IBPreset';
-import type { IBSheetInstance, IBSheetOptions } from './components/IBSheetVue.Interface'
-// import { IBSheetVue, IB_Preset, type IBSheetInstance, type IBSheetOptions } from '../dist/ibsheet-vue/types/index';
+import { IB_Preset, type IBSheetInstance, type IBSheetOptions } from '@ibsheet/interface';
 
 console.log('IBSheetVue:', IBSheetVue);
 

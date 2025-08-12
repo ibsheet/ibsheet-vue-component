@@ -17,8 +17,14 @@ A Vue.js wrapper component for IBSheet, providing seamless integration of IBShee
 
 Make sure you have IBSheet library loaded in your project before using this component.
 
+Using npm:
 ```bash
-yarn install ibsheet-vue
+npm install @ibsheet/vue
+```
+
+Using yarn:
+```bash
+yarn add @ibsheet/vue
 ```
 
 ## Usage
@@ -38,7 +44,7 @@ yarn install ibsheet-vue
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { IBSheetVue, type IBSheetOptions } from 'ibsheet-vue'
+import { IBSheetVue, type IBSheetOptions } from '@ibsheet/vue'
 
 const sheetOptions: IBSheetOptions = {
   // Your IBSheet configuration options
@@ -53,21 +59,21 @@ const sheetOptions: IBSheetOptions = {
   ]
 };
 
-const sheetData = ref([
+const sheetData = [
   { id: "1", name: "John Doe", age: 30 },
   { id: "2", name: "Jane Smith", age: 25 }
-]);
+];
 </script>
 ```
 
-### Advanced Usage with Template Refs
+### Advanced Usage with Event Handling
 
 ```vue
 <template>
   <div>
     <div>
       <button @click="addRow">Add Row</button>
-      <button @click="getData">Get Data</button>
+      <button @click="getDataRows">Get DataRows</button>
     </div>
     
     <IBSheetVue
@@ -75,14 +81,16 @@ const sheetData = ref([
       :data="sheetData"
       :sync="false"
       :style="customStyle"
-      @sheet-instance="onSheetReady"
+      @instance="getInstance"
     />
   </div>
 </template>
 
 <script setup lang="ts">
 import { shallowRef } from 'vue';
-import { IBSheetVue, IB_Preset, type IBSheetInstance, type IBSheetOptions } from 'ibsheet-vue'
+import { IBSheetVue, IB_Preset, type IBSheetInstance, type IBSheetOptions, type IBSheetEvents } from '@ibsheet/vue'
+
+type OnAfterChangeParam = Parameters<NonNullable<IBSheetEvents['onAfterChange']>>[0];
 
 const sheet = shallowRef<IBSheetInstance | null>(null);
 
@@ -102,9 +110,9 @@ const sheetOptions: IBSheetOptions = {
   ]
 };
 
-const sheetData = shallowRef([
+const sheetData = [
   // Your data
-]);
+];
 
 const customStyle = {
   width: '100%',
@@ -113,13 +121,13 @@ const customStyle = {
   borderRadius: '8px'
 };
 
-const onSheetReady = (sheetInstance: IBSheetInstance) => {
+const getInstance = (sheetInstance: IBSheetInstance) => {
   console.log('Sheet instance ready:', sheetInstance);
   sheet.value = sheetInstance;
   
   // Set up event listeners
-  if (sheetInstance.addEventListener) {
-    sheetInstance.addEventListener('onAfterChange', (event: any) => {
+  if (sheet.value.addEventListener) {
+    sheet.value.addEventListener('onAfterChange', (event: OnAfterChangeParam) => {
       console.log('Data changed value:', event.val);
     });
   }
@@ -131,7 +139,7 @@ const addRow = () => {
   }
 };
 
-const getData = () => {
+const getDataRows = () => {
   if (sheet.value && sheet.value.getDataRows) {
     const data = sheet.value.getDataRows();
     console.log('Sheet data:', data);
@@ -148,12 +156,13 @@ const getData = () => {
 | `data` | `any[]` | ❌ | `[]` | Initial data for the spreadsheet |
 | `sync` | `boolean` | ❌ | `false` | Enable data synchronization |
 | `style` | `Partial<CSSStyleDeclaration>` | ❌ | `{ width: '100%', height: '800px' }` | Container styling object |
+| `exgSheet` | `IBSheetInstance` | ❌ | `null` | Existing IBSheet instance to reuse |
 
 ## Events
 
 | Event | Payload | Description |
 |-------|---------|-------------|
-| `sheet-instance` | `any` | Emitted when the IBSheet instance is created and ready |
+| `instance` | `IBSheetInstance` | Emitted when the IBSheet instance is created and ready |
 
 ## TypeScript Support
 
@@ -174,7 +183,7 @@ export interface IBSheetOptions {
 }
 ```
 
-The component provides full TypeScript support with proper type inference for props and events.
+IBSheet interface: https://www.npmjs.com/package/@ibsheet/interface
 
 ## Lifecycle Management
 
@@ -236,13 +245,28 @@ The component handles cleanup automatically, but ensure:
 - Don't hold references to sheet instances after component unmount
 - Remove custom event listeners you've added manually
 
-## Best Practices
+## load to IBSheet
 
-1. **Reactive Data**: Use Vue's reactivity system for dynamic data updates
-2. **Error Handling**: Always handle the `sheet-instance` event for initialization feedback
-3. **Performance**: Use `shallowRef` for large datasets when deep reactivity isn't required
-4. **Type Safety**: Leverage TypeScript for better development experience
-5. **Testing**: Use Vue Test Utils with appropriate mocking for IBSheet library
+Using Including External Script
+
+ex) in index.html
+```html
+<link rel="stylesheet" href="ibsheet_path/css/default/main.css"/>
+
+<script src="ibsheet_path/ibsheet.js"></script>
+<script src="ibsheet_path/locale/ko.js"></script>
+<script src="ibsheet_path/plugins/ibsheet-common.js"></script>
+<script src="ibsheet_path/plugins/ibsheet-dialog.js"></script>
+<script src="ibsheet_path/plugins/ibsheet-excel.js"></script>
+```
+
+Using IBSheetLoader
+reference: https://www.npmjs.com/package/@ibsheet/loader
+manual: https://ibsheet.github.io/loader-manual
+
+## IBSheet Manual
+
+https://docs.ibsheet.com/ibsheet/v8/manual/#docs/intro/1introduce
 
 ## License
 

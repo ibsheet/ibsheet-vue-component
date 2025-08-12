@@ -1,5 +1,6 @@
 {
   "name": "ibsheet-vue-component",
+  "private": true,
   "version": "1.0.0",
   "license": "MIT",
   "type": "module",
@@ -21,6 +22,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ibsheet/interface": "^1.0.0",
     "vue": "^3.5.18"
   },
   "devDependencies": {

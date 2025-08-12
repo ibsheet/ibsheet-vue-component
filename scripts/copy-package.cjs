@@ -5,9 +5,10 @@ const basePackage = require('../package.json')
 
 // 필요한 필드만 추출
 const distPackage = {
-  name: basePackage.name.replace('-component', ''),
+  name: "@ibsheet/vue",
   version: basePackage.version,
   license: basePackage.license,
+  author: "IB Leaders <support@ibleaders.co.kr>",
   keywords: [
     "vue",
     "ibsheet",
@@ -34,7 +35,10 @@ const distPackage = {
     }
   },
   peerDependencies: {
-    vue: '^3.0.0'
+    vue: '>=3.0.0'
+  },
+  dependencies: {
+    "@ibsheet/interface": ">=1.0.0"
   }
 }
 
