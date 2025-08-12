@@ -19,7 +19,12 @@
     "copy-package": "node scripts/copy-package.cjs",
     "build:types": "vue-tsc src/components/index.ts --declaration --emitDeclarationOnly --outDir dist/ibsheet-vue/types",
     "postbuild": "shx cp src/README.md LICENSE dist/ibsheet-vue/",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "release": "standard-version",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:publish": "yarn release && cd dist/ibsheet-vue && npm publish --access public",
+    "postrelease": "shx cp CHANGELOG.md dist/ibsheet-vue"
   },
   "dependencies": {
     "@ibsheet/interface": "^1.0.0",
@@ -31,6 +36,7 @@
     "@vue/runtime-core": "^3.5.18",
     "@vue/tsconfig": "^0.7.0",
     "shx": "^0.4.0",
+    "standard-version": "^9.5.0",
     "typescript": "~5.8.3",
     "vite": "^7.0.4",
     "vue-tsc": "^2.2.12"
