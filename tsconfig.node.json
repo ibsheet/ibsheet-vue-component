@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "declaration": true,               // 타입 선언 파일 생성
+    "declaration": true, // 타입 선언 파일 생성
     "declarationDir": "dist/ibsheet-vue", // 선언 파일 출력 경로
-    "emitDeclarationOnly": true,      // JS 파일은 생성하지 않음
+    "emitDeclarationOnly": true, // JS 파일은 생성하지 않음
     "outDir": "dist/ibsheet-vue",
-    "baseUrl": ".", 
+    "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },

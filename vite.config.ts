@@ -9,13 +9,13 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, 'src/components/index.ts'),
       name: 'IBSheetVue',
-      fileName: (format) => `ibsheet-vue.${format}.js`,
+      fileName: format => `ibsheet-vue.${format}.js`,
     },
     rollupOptions: {
       external: ['vue'],
       output: {
-        globals: { vue: 'Vue' }
-      }
-    }
-  }
+        globals: { vue: 'Vue' },
+      },
+    },
+  },
 })
