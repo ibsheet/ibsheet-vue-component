@@ -12,6 +12,17 @@
     IBSheetOptions,
   } from '@ibsheet/interface'
 
+  interface IBSheetInstanceWithId extends IBSheetInstance {
+    id: string
+  }
+
+  interface IBSheetWindow {
+    IBSheet?: {
+      version: string
+      create: (opt: IBSheetCreateOptions) => IBSheetInstance
+    }
+  }
+
   function generateId(len: number): string {
     const chars =
       'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -30,7 +41,7 @@
         required: true,
       },
       data: {
-        type: Array as () => any[],
+        type: Array as () => unknown[],
         default: () => [],
       },
       sync: {
@@ -84,7 +95,7 @@
         const intervalTime = 100
 
         retryInterval.value = setInterval(() => {
-          const IBSheet = (window as any).IBSheet
+          const IBSheet = (window as Window & IBSheetWindow).IBSheet
           if (IBSheet && IBSheet.version) {
             if (retryInterval.value) {
               clearInterval(retryInterval.value)
@@ -124,7 +135,9 @@
       onMounted(() => {
         if (props.exgSheet) {
           const sheet = props.exgSheet
-          const el = document.getElementById((sheet as any).id)
+          const el = document.getElementById(
+            (sheet as IBSheetInstanceWithId).id
+          )
           if (
             el &&
             containerRef.value &&
