@@ -257,7 +257,7 @@ The component handles cleanup automatically, but ensure:
 - Don't hold references to sheet instances after component unmount
 - Remove custom event listeners you've added manually
 
-## load to IBSheet
+## Load the IBSheet Library
 
 Using Including External Script
 
@@ -276,6 +276,12 @@ ex) in index.html
 Using IBSheetLoader
 reference: https://www.npmjs.com/package/@ibsheet/loader
 manual: https://ibsheet.github.io/loader-manual
+
+## Local Setup of the IBSheet Library
+
+- Install the IBSheet library in the project's `root/public` directory or a subdirectory within `root/public`
+- If you are using the "Including External Script" method, set the path to the IBSheet library in `ibsheet_path`
+- If you are using the "IBSheetLoader" method, set the path to the IBSheet library in `baseUrl`
 
 ## IBSheet Manual
 
