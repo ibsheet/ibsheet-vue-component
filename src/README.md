@@ -1,17 +1,15 @@
 # ibsheet-vue
 
-A Vue.js wrapper component for IBSheet, providing seamless integration of IBSheet spreadsheet functionality into Vue 3 applications using the Composition API.
+A Vue.js wrapper component for IBSheet, providing seamless integration of IBSheet spreadsheet functionality into Vue 3 applications.
 
 ## Features
 
 - 🔧 Easy integration with IBSheet library
 - ⚡ Automatic initialization and cleanup
-- 🎯 TypeScript support with Vue 3 Composition API
+- 🎯 TypeScript support
 - 🔄 Data synchronization support
 - 📤 Event emission for sheet instance access
 - 🎨 Customizable styling
-- 🔍 Reactive props with automatic re-initialization
-- 🚀 Template ref exposure for direct access
 
 ## Installation
 
@@ -36,14 +34,12 @@ yarn add @ibsheet/vue
 ```vue
 <template>
   <div>
-    <h1>My Spreadsheet</h1>
     <IBSheetVue :options="sheetOptions" :data="sheetData" />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import { IBSheetVue, type IBSheetOptions } from '@ibsheet/vue'
+  import { IBSheetVue, type IBSheetInstance } from '@ibsheet/vue'
 
   const sheetOptions: IBSheetOptions = {
     // Your IBSheet configuration options
@@ -52,18 +48,20 @@ yarn add @ibsheet/vue
       HeaderMerge: 3,
     },
     Cols: [
-      { Header: 'ID', Type: 'Text', Name: 'id' },
+      { Header: 'ID', Type: 'Text', Name: 'sId' },
       { Header: 'Name', Type: 'Text', Name: 'name' },
       { Header: 'Age', Type: 'Int', Name: 'age' },
     ],
   }
 
   const sheetData = [
-    { id: '1', name: 'John Doe', age: 30 },
-    { id: '2', name: 'Jane Smith', age: 25 },
+    { sId: '1', name: 'John Doe', age: 30 },
+    { sId: '2', name: 'Jane Smith', age: 25 },
   ]
 </script>
 ```
+
+Example: https://stackblitz.com/edit/vitejs-vite-brpanol5
 
 ### Advanced Usage with Event Handling
 
@@ -71,22 +69,19 @@ yarn add @ibsheet/vue
 <template>
   <div>
     <div>
-      <button @click="addRow">Add Row</button>
-      <button @click="getDataRows">Get DataRows</button>
+      <button @click="handleAddRow">Add Row</button>
+      <button @click="handleExportExcel">Export Excel</button>
     </div>
 
     <IBSheetVue
       :options="sheetOptions"
       :data="sheetData"
-      :sync="false"
-      :style="customStyle"
       @instance="getInstance"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-  import { shallowRef } from 'vue'
   import {
     IBSheetVue,
     IB_Preset,
@@ -95,11 +90,11 @@ yarn add @ibsheet/vue
     type IBSheetEvents,
   } from '@ibsheet/vue'
 
-  type OnAfterChangeParam = Parameters<
-    NonNullable<IBSheetEvents['onAfterChange']>
-  >[0]
-
-  const sheet = shallowRef<IBSheetInstance | null>(null)
+  
+  const handleAfterChange: IBSheetEvents['onAfterChange'] = (param) => { 
+    // The type of the parameter is automatically inferred.
+    console.log('Data changed value:', param.val); 
+  };
 
   const sheetOptions: IBSheetOptions = {
     // Your IBSheet configuration options
@@ -108,17 +103,17 @@ yarn add @ibsheet/vue
       HeaderMerge: 3,
     },
     Cols: [
-      { Header: 'ID', Type: 'Text', Name: 'id' },
+      { Header: 'ID', Type: 'Text', Name: 'sId' },
       { Header: 'Name', Type: 'Text', Name: 'name' },
       { Header: 'Age', Type: 'Int', Name: 'age' },
-      { Header: 'Ymd', Name: 'sDate_Ymd', Extend: IB_Preset.YMD, Width: 110 },
-      { Header: 'Ym', Name: 'sDate_Ym', Extend: IB_Preset.YM, Width: 90 },
-      { Header: 'Md', Name: 'sDate_Md', Extend: IB_Preset.MD, Width: 90 },
+      { Header: 'Ymd', Name: 'sDate_Ymd', Extend: IB_Preset.YMD, Width: 110 }
     ],
   }
 
   const sheetData = [
     // Your data
+    { sId: '1', name: 'John Doe', age: 30, sDate_Ymd:'20250923' },
+    { sId: '2', name: 'Jane Smith', age: 25, sDate_Ymd:'20251002' }
   ]
 
   const customStyle = {
@@ -128,35 +123,30 @@ yarn add @ibsheet/vue
     borderRadius: '8px',
   }
 
-  const getInstance = (sheetInstance: IBSheetInstance) => {
-    console.log('Sheet instance ready:', sheetInstance)
-    sheet.value = sheetInstance
+  let mySheet: IBSheetInstance;
 
-    // Set up event listeners
-    if (sheet.value.addEventListener) {
-      sheet.value.addEventListener(
-        'onAfterChange',
-        (event: OnAfterChangeParam) => {
-          console.log('Data changed value:', event.val)
-        }
-      )
+  const getInstance = (sheet: IBSheetInstance) => {
+    // You can store the sheet instance or perform initial operations
+    mySheet = sheet
+  }
+
+  const handleAddRow = () => {
+    if (mySheet) {
+      mySheet.addRow();
     }
   }
 
-  const addRow = () => {
-    if (sheet.value && sheet.value.addRow) {
-      sheet.value.addRow()
-    }
-  }
-
-  const getDataRows = () => {
-    if (sheet.value && sheet.value.getDataRows) {
-      const data = sheet.value.getDataRows()
-      console.log('Sheet data:', data)
+  const handleExportExcel = () => {
+    if (mySheet) {
+      // exportData method requires the jsZip library
+      // When checking for the jsZip library, if it hasn't been loaded separately, the file at ./plugins/jszip.min.js (relative to ibsheet.js) will be loaded automatically.
+      mySheet.exportData({fileName:'ibsheet_vue_export_example.xlsx'});
     }
   }
 </script>
 ```
+
+Example: https://stackblitz.com/edit/vitejs-vite-fx91nwtn
 
 ## Props
 
