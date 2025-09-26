@@ -38,7 +38,7 @@ const distPackage = {
     vue: '>=3.0.0'
   },
   dependencies: {
-    "@ibsheet/interface": ">=1.0.0"
+    "@ibsheet/interface": "latest"
   }
 }
 

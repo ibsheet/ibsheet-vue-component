@@ -31,7 +31,7 @@
     "release:publish": "yarn release && cd dist/ibsheet-vue && npm publish --access public"
   },
   "dependencies": {
-    "@ibsheet/interface": "^1.0.0",
+    "@ibsheet/interface": "latest",
     "vue": "^3.5.18"
   },
   "devDependencies": {
