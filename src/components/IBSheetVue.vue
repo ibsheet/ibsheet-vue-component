@@ -1,11 +1,5 @@
 <script lang="ts">
-  import {
-    defineComponent,
-    shallowRef,
-    onMounted,
-    onBeforeUnmount,
-    watch,
-  } from 'vue'
+  import { defineComponent, shallowRef, onMounted, onBeforeUnmount } from 'vue'
   import type {
     IBSheetCreateOptions,
     IBSheetInstance,
@@ -163,26 +157,6 @@
           }
         }
       })
-
-      watch(
-        () => [props.options, props.data, props.sync, props.style],
-        () => {
-          if (retryInterval.value) {
-            clearInterval(retryInterval.value)
-            retryInterval.value = null
-          }
-          if (sheetObj.value && typeof sheetObj.value.dispose === 'function') {
-            try {
-              sheetObj.value.dispose()
-            } catch (err) {
-              console.warn('Error disposing IBSheet instance:', err)
-            }
-            sheetObj.value = null
-          }
-          if (containerRef.value) containerRef.value.innerHTML = ''
-          initializeSheet()
-        }
-      )
 
       return {
         containerRef,
