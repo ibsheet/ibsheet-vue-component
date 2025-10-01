@@ -191,7 +191,6 @@ The component handles Vue's lifecycle automatically:
 
 1. **onMounted**: Creates container and initializes IBSheet
 2. **onBeforeUnmount**: Cleans up intervals and disposes IBSheet instance
-3. **watch**: Monitors prop changes and reinitializes when needed
 
 ## Error Handling
 
@@ -211,7 +210,7 @@ The component applies default dimensions of 100% width and 800px height.
 1. **IBSheet Library**: Ensure the IBSheet library is loaded before component initialization
 2. **Unique IDs**: Each component instance generates unique container and sheet IDs automatically
 3. **Memory Management**: The component handles cleanup automatically on unmount
-4. **Reactivity**: Props are deeply watched and changes trigger sheet reinitialization
+4. **Static Props**: Props are evaluated once during initialization. Changes to props after mount will not update the sheet
 5. **Performance**: Consider using `v-if` instead of `v-show` for conditional rendering to ensure proper cleanup
 
 ## Troubleshooting
@@ -233,6 +232,16 @@ The component applies default dimensions of 100% width and 800px height.
 - Add IBSheet script to your `index.html`
 - Verify network requests are successful
 - Check IBSheet version compatibility
+
+### Props not updating the sheet
+
+Since props are not reactive after initialization:
+
+**Solutions:**
+
+- Use IBSheet API methods to update data: `loadSearchData, doSearch, doSearchPaging`
+- For configuration changes, recreate the component using `v-if` or key changes
+- Access the sheet instance through the `@instance` event for manual updates
 
 ### Performance issues with reactive props
 
