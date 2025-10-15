@@ -14,6 +14,16 @@
     IBSheet?: {
       version: string
       create: (opt: IBSheetCreateOptions) => IBSheetInstance
+      CommonOptions: unknown
+    }
+    IBSheetLoader?: {
+      isReady: boolean
+      isLoaded: boolean
+      onReady?: (callback: () => void) => void
+      _status: number
+      registry: {
+        _list: unknown[]
+      }
     }
   }
 
@@ -90,7 +100,46 @@
 
         retryInterval.value = setInterval(() => {
           const IBSheet = (window as Window & IBSheetWindow).IBSheet
-          if (IBSheet && IBSheet.version) {
+          const IBSheetLoader = (window as Window & IBSheetWindow).IBSheetLoader
+          // IBSheetLoader 사용 시, loader가 로드 완료된 후에 IBSheet 객체가 생성되도록 조건 추가
+          if (IBSheetLoader && IBSheet) {
+            const loaderState = IBSheetLoader['_status']
+            // const loaderList = IBSheetLoader.registry._list
+
+            if (loaderState == 0 && IBSheet && IBSheet.version) {
+              // 로드 중이였다가 로드 완료된 경우
+              if (retryInterval.value) {
+                clearInterval(retryInterval.value)
+                retryInterval.value = null
+              }
+
+              try {
+                const opt: IBSheetCreateOptions = {
+                  id: sheetId,
+                  el: containerDiv,
+                  options: props.options,
+                  data: props.data ?? [],
+                  sync: props.sync ?? false,
+                }
+
+                const sheet = IBSheet.create(opt)
+                sheetObj.value = sheet
+                emit('instance', sheet)
+              } catch (err) {
+                console.error('Error initializing IBSheet:', err)
+              }
+            }
+            retryCount++
+            if (retryCount >= maxRetries) {
+              if (retryInterval.value) {
+                clearInterval(retryInterval.value)
+                retryInterval.value = null
+              }
+              console.error(
+                '[initializeIBSheet] IBSheet Initialization Failed: Maximum Retry Exceeded'
+              )
+            }
+          } else if (IBSheet && IBSheet.version) {
             if (retryInterval.value) {
               clearInterval(retryInterval.value)
               retryInterval.value = null

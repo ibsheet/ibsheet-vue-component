@@ -15,6 +15,7 @@
     sheet.value = instance
     // console.log('onSheetReady :', instance);
     // console.log(sheet.value);
+    console.log('IBSheet:', window['IBSheet']);
   }
 
   const Options: IBSheetOptions = {
@@ -61,7 +62,7 @@
   }
 
   const Style = {
-    width: '100%',
+    width: '800px',
     height: '500px',
   }
 
@@ -71,12 +72,12 @@
 </script>
 
 <template>
-  <ibsheet-vue
+  <IBSheetVue
     :options="Options"
     :data="sheetData"
     :sync="sheetSync"
     :style="Style"
     @sheet-instance="onSheetReady"
   >
-  </ibsheet-vue>
+  </IBSheetVue>
 </template>
