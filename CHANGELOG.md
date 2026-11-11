@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### 1.1.1 (2026-11-11)
+
+
+### Documentation
+
+* README, description, keywords
+
 ## [1.1.0](https://github.com/ibsheet/ibsheet-vue-component/compare/v1.0.5...v1.1.0) (2025-10-15)
 
 
