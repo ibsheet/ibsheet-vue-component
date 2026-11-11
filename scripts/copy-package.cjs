@@ -6,6 +6,7 @@ const basePackage = require('../package.json')
 // 필요한 필드만 추출
 const distPackage = {
   name: "@ibsheet/vue",
+  description: "Vue data grid component: the official wrapper for the IBsheet 8 JavaScript data grid (Vue 3)",
   version: basePackage.version,
   license: basePackage.license,
   author: "IB Leaders <support@ibleaders.co.kr>",
@@ -13,7 +14,18 @@ const distPackage = {
     "vue",
     "ibsheet",
     "grid",
-    "component"
+    "component",
+    "ibsheet8",
+    "vue3",
+    "vue-component",
+    "data-grid",
+    "datagrid",
+    "table",
+    "spreadsheet",
+    "excel",
+    "vue-grid",
+    "vue-data-grid",
+    "vue-datagrid"
   ],
   repository: {
     "type": "git",

@@ -1,10 +1,16 @@
 # ibsheet-vue
 
-A Vue.js wrapper component for IBSheet, providing seamless integration of IBSheet spreadsheet functionality into Vue 3 applications.
+**@ibsheet/vue** is a Vue data grid component: the official wrapper for using [**IBsheet 8**](https://www.ibsheet.com), a JavaScript data grid, in Vue 3. IBsheet 8 supports tree, grouping, subtotals, pivot, formulas, frozen panes, cell merge, and Excel export and import.
+
+**@ibsheet/vue**는 Vue(뷰) 데이터 그리드 컴포넌트입니다. 웹 데이터 그리드 [**IBsheet 8**](https://www.ibsheet.com)을 Vue 3에서 쓰기 위한 공식 래퍼입니다. IBsheet 8은 트리 · 그룹핑 · 소계 · 피벗 · 수식 · 틀고정 · 셀 병합 · 엑셀 내보내기와 가져오기를 지원합니다.
+
+- IBsheet 8 homepage (제품 소개): https://www.ibsheet.com
+- IBsheet 8 manual (매뉴얼): https://docs.ibsheet.com/ibsheet/v8/manual/
+- MCP server for AI coding tools such as Claude Code, Cursor, GitHub Copilot, Codex CLI and Gemini CLI (AI 코딩 도구 연동): https://docs.ibsheet.com/ibsheet/v8/manual/docs/start/mcp.html
 
 ## Features
 
-- 🔧 Easy integration with IBSheet library
+- 🔧 Easy integration with IB Sheet library
 - ⚡ Automatic initialization and cleanup
 - 🎯 TypeScript support
 - 🔄 Data synchronization support
@@ -13,7 +19,7 @@ A Vue.js wrapper component for IBSheet, providing seamless integration of IBShee
 
 ## Installation
 
-Make sure you have IBSheet library loaded in your project before using this component.
+Make sure you have IB Sheet library loaded in your project before using this component.
 
 Using npm:
 
@@ -152,21 +158,21 @@ Example: https://stackblitz.com/edit/vitejs-vite-fx91nwtn
 
 | Prop       | Type                           | Required | Default                              | Description                        |
 | ---------- | ------------------------------ | -------- | ------------------------------------ | ---------------------------------- |
-| `options`  | `IBSheetOptions`               | ✅       | -                                    | IBSheet configuration options      |
+| `options`  | `IBSheetOptions`               | ✅       | -                                    | IB Sheet configuration options      |
 | `data`     | `any[]`                        | ❌       | `[]`                                 | Initial data for the spreadsheet   |
 | `sync`     | `boolean`                      | ❌       | `false`                              | Enable data synchronization        |
 | `style`    | `Partial<CSSStyleDeclaration>` | ❌       | `{ width: '100%', height: '800px' }` | Container styling object           |
-| `exgSheet` | `IBSheetInstance`              | ❌       | `null`                               | Existing IBSheet instance to reuse |
+| `exgSheet` | `IBSheetInstance`              | ❌       | `null`                               | Existing IB Sheet instance to reuse |
 
 ## Events
 
 | Event      | Payload           | Description                                            |
 | ---------- | ----------------- | ------------------------------------------------------ |
-| `instance` | `IBSheetInstance` | Emitted when the IBSheet instance is created and ready |
+| `instance` | `IBSheetInstance` | Emitted when the IB Sheet instance is created and ready |
 
 ## TypeScript Support
 
-Define your IBSheet options interface:
+Define your IB Sheet options interface:
 
 ```typescript
 export interface IBSheetOptions {
@@ -183,22 +189,22 @@ export interface IBSheetOptions {
 }
 ```
 
-IBSheet interface: https://www.npmjs.com/package/@ibsheet/interface
+IB Sheet interface: https://www.npmjs.com/package/@ibsheet/interface
 
 ## Lifecycle Management
 
 The component handles Vue's lifecycle automatically:
 
-1. **onMounted**: Creates container and initializes IBSheet
-2. **onBeforeUnmount**: Cleans up intervals and disposes IBSheet instance
+1. **onMounted**: Creates container and initializes IB Sheet
+2. **onBeforeUnmount**: Cleans up intervals and disposes IB Sheet instance
 
 ## Error Handling
 
 The component includes comprehensive error handling:
 
 - **Props Validation**: Validates that required `options` prop is provided
-- **Initialization Retry**: Retries IBSheet initialization up to 50 times (5 seconds total)
-- **Safe Disposal**: Safely disposes of IBSheet instances with error catching
+- **Initialization Retry**: Retries IB Sheet initialization up to 50 times (5 seconds total)
+- **Safe Disposal**: Safely disposes of IB Sheet instances with error catching
 - **Console Logging**: Provides detailed error messages for debugging
 
 ### Default Styling
@@ -207,7 +213,7 @@ The component applies default dimensions of 100% width and 800px height.
 
 ## Important Notes
 
-1. **IBSheet Library**: Ensure the IBSheet library is loaded before component initialization
+1. **IB Sheet Library**: Ensure the IB Sheet library is loaded before component initialization
 2. **Unique IDs**: Each component instance generates unique container and sheet IDs automatically
 3. **Memory Management**: The component handles cleanup automatically on unmount
 4. **Static Props**: Props are evaluated once during initialization. Changes to props after mount will not update the sheet
@@ -217,11 +223,11 @@ The component applies default dimensions of 100% width and 800px height.
 
 ### Component not initializing
 
-- Verify IBSheet library is loaded in your application
+- Verify IB Sheet library is loaded in your application
 - Check browser console for error messages
-- Ensure `options` prop contains valid IBSheet configuration
+- Ensure `options` prop contains valid IB Sheet configuration
 
-### IBSheet library not found error
+### IB Sheet library not found error
 
 ```
 [initializeIBSheet] IBSheet Initialization Failed: Maximum Retry Exceeded
@@ -229,9 +235,9 @@ The component applies default dimensions of 100% width and 800px height.
 
 **Solutions:**
 
-- Add IBSheet script to your `index.html`
+- Add IB Sheet script to your `index.html`
 - Verify network requests are successful
-- Check IBSheet version compatibility
+- Check IB Sheet version compatibility
 
 ### Props not updating the sheet
 
@@ -239,7 +245,7 @@ Since props are not reactive after initialization:
 
 **Solutions:**
 
-- Use IBSheet API methods to update data: `loadSearchData, doSearch, doSearchPaging`
+- Use IB Sheet API methods to update data: `loadSearchData, doSearch, doSearchPaging`
 - For configuration changes, recreate the component using `v-if` or key changes
 - Access the sheet instance through the `@instance` event for manual updates
 
@@ -256,7 +262,7 @@ The component handles cleanup automatically, but ensure:
 - Don't hold references to sheet instances after component unmount
 - Remove custom event listeners you've added manually
 
-## Load the IBSheet Library
+## Load the IB Sheet Library
 
 Using Including External Script
 
@@ -277,13 +283,13 @@ Using IBSheetLoader
 - reference: https://www.npmjs.com/package/@ibsheet/loader
 - manual: https://ibsheet.github.io/loader-manual
 
-## Local Setup of the IBSheet Library
+## Local Setup of the IB Sheet Library
 
-- Install the IBSheet library in the project's `root/public` directory or a subdirectory within `root/public`
-- If you are using the "Including External Script" method, set the path to the IBSheet library in `ibsheet_path`
-- If you are using the "IBSheetLoader" method, set the path to the IBSheet library in `baseUrl`
+- Install the IB Sheet library in the project's `root/public` directory or a subdirectory within `root/public`
+- If you are using the "Including External Script" method, set the path to the IB Sheet library in `ibsheet_path`
+- If you are using the "IBSheetLoader" method, set the path to the IB Sheet library in `baseUrl`
 
-## IBSheet Manual
+## IB Sheet Manual
 
 https://docs.ibsheet.com/ibsheet/v8/manual/#docs/intro/1introduce
 
